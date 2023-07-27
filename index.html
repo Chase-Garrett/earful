@@ -5,13 +5,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="Description" content="Weather dashboard page" />
+    <meta name="Description" content="Music Player" />
     <title>Earful</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.css" />
 </head>
 
+
 <body>
-    
+
+    <section class="hero">
+        <div class="hero-body has-text-centered has has-background-info headhero">
+          <p class="title">
+            EARFUL
+          </p>
+          <p class="subtitle">
+           Music player
+          </p>
+        </div>
+      </section>
+
+    <div class="columns has-padding is-flex is-justify-content-space-evenly has-text-centered columnSection" id="columns">
+        <div class="column is-2 is-multiline is-one-third">
+            <button class="button has-padding-horizontal-2 is-rounded is-size-4 longbutton">Country</button>
+            <button class="button is-rounded is-size-4 longbutton">Rock</button>
+        </div>
+        <div class="column is-2 is-multiline is-one-third">
+            <button class="button is-rounded is-size-4 longbutton">Pop</button>
+            <button class="button is-rounded is-size-4 longbutton">Hip Hop</button>
+        </div>
+        <div class="column is-2 is-multiline is-one-third">
+            <button class="button is-rounded is-size-4 longbutton">Popular</button>
+            <button class="button is-rounded is-size-4 longbutton">R&B</button>
+        </div>
+    </div>
+
+    <input class="input is-rounded is-offset-3 searchbar" type="text" placeholder="Text input">
+
 </body>
 
 </html>

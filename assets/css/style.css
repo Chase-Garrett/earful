@@ -1,0 +1,32 @@
+body {
+    margin:6rem
+};
+
+body {
+    background-color:yellow
+}
+
+#columns {padding-top: 4rem;}
+
+.longbutton {
+    width:20rem;
+    background-image: linear-gradient(blue,white );
+    margin-bottom: 2rem;
+}
+
+.columnSection {
+    margin-top: 4rem;
+}
+
+.searchbar {
+    width: 70rem;
+    margin-left: 20rem;
+    margin-top: 5rem;
+}
+
+.headhero {
+    background-image:linear-gradient(blue, white);
+    border-radius: 5rem;
+    width: 70rem;
+    margin-left: 20rem;
+}
