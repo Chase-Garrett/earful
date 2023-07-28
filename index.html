@@ -5,13 +5,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="Description" content="Weather dashboard page" />
+    <meta name="Description" content="Music Player" />
     <title>Earful</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.css" />
 </head>
 
+
 <body>
-    
+
+    <section class="hero is flex">
+        <div class="hero-body has-text-centered has has-background-info headhero">
+            <p class="title">
+                Earful
+            </p>
+            <p class="subtitle">
+                Music Player
+            </p>
+        </div>
+    </section>
+
+    <div class="columns is-justify-content-space-evenly has-text-centered columnSection" id="columns">
+        <div class="column is-2 is-multiline is-one-third">
+            <button id="country-btn" class="button has-padding-horizontal-2 is-rounded is-size-4 longbutton">Country</button>
+            <button id="rock-btn" class="button is-rounded is-size-4 longbutton">Rock</button>
+        </div>
+        <div class="column is-2 is-multiline is-one-third">
+            <button id="pop-btn" class="button is-rounded is-size-4 longbutton">Pop</button>
+            <button id="all-btn" class="button is-rounded is-size-4 longbutton">All</button>
+        </div>
+        <div class="column is-2 is-multiline is-one-third">
+            <button id="rap-btn" class="button is-rounded is-size-4 longbutton">Rap</button>
+            <button id="r&b-btn" class="button is-rounded is-size-4 longbutton">R&B</button>
+        </div>
+    </div>
+
+    <div class="column mt-4 is-8 is-offset-2">
+        <input id="song-search" class="input is-rounded searchbar" type="text" placeholder="Search artist, song, or genre here.">
+    </div>
+
+    <main class="columns">
+        <aside class="column is-one-half">
+            <div id="playlist">
+                <table>
+                    <thead>
+                      <tr>
+                        <th>Rank</th>
+                        <th>Title</th>
+                        <th>Artist</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Three</td>
+                        <td>Four</td>
+                      </tr>
+                      <tr>
+                        <td>Five</td>
+                        <td>Six</td>
+                      </tr>
+                      <tr>
+                        <td>Seven</td>
+                        <td>Eight</td>
+                      </tr>
+                      <tr>
+                        <td>Nine</td>
+                        <td>Ten</td>
+                      </tr>
+                      <tr>
+                        <td>Eleven</td>
+                        <td>Twelve</td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+        </aside>
+        <section>
+            <div id="video">
+                <!--video to be placed here-->
+            </div>
+        </section>
+    </main>
+
+
 </body>
 
 </html>
