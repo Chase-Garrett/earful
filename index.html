@@ -8,6 +8,10 @@
     <meta name="Description" content="Music Player" />
     <title>Earful</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script src="https://kit.fontawesome.com/7ba86bbea7.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css" />
 </head>
 
@@ -16,9 +20,9 @@
 
     <section class="hero is flex">
         <div class="hero-body has-text-centered has has-background-info headhero">
-            <p class="title">
+            <h1 class="title">
                 Earful
-            </p>
+            </h1>
             <p class="subtitle">
                 Music Player
             </p>
@@ -40,53 +44,56 @@
         </div>
     </div>
 
-    <div class="column mt-4 is-8 is-offset-2">
-        <input id="song-search" class="input is-rounded searchbar" type="text" placeholder="Search artist, song, or genre here.">
+    <div class="column mt-4 is-8 is-offset-2 field has-addons">
+        <input id="song-search" class="input searchbar has-text-centered" type="text" placeholder="Search artist, song, or genre here">
+        <div class="control has-icons-center">
+            <button id="search-btn" class="button is-rounded"><i class="fa-solid fa-magnifying-glass fa-lg" style="color: #000000;"></i></button>
+        </div>
     </div>
-
+    
     <main class="columns">
-        <aside class="column is-one-half">
-            <div id="playlist">
-                <table>
-                    <thead>
-                      <tr>
-                        <th>Rank</th>
-                        <th>Title</th>
-                        <th>Artist</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Three</td>
-                        <td>Four</td>
-                      </tr>
-                      <tr>
-                        <td>Five</td>
-                        <td>Six</td>
-                      </tr>
-                      <tr>
-                        <td>Seven</td>
-                        <td>Eight</td>
-                      </tr>
-                      <tr>
-                        <td>Nine</td>
-                        <td>Ten</td>
-                      </tr>
-                      <tr>
-                        <td>Eleven</td>
-                        <td>Twelve</td>
-                      </tr>
-                    </tbody>
-                  </table>
-            </div>
-        </aside>
-        <section>
-            <div id="video">
-                <!--video to be placed here-->
-            </div>
-        </section>
-    </main>
+      <aside class="column is-two-fifths">
+          <div id="playlist">
+              <table>
+                  <thead>
+                    <tr>
+                      <th>Title</th>
+                      <th>Artist</th>
+                    </tr>
+                  </thead>
+                  <tbody>
 
+                  <!-- Placeholder -->
+                    <tr>
+                      <td>Three</td>
+                      <td>Four</td>
+                    </tr>
+                    <tr>
+                      <td>Five</td>
+                      <td>Six</td>
+                    </tr>
+                    <tr>
+                      <td>Seven</td>
+                      <td>Eight</td>
+                    </tr>
+                    <tr>
+                      <td>Nine</td>
+                      <td>Ten</td>
+                    </tr>
+                    <tr>
+                      <td>Eleven</td>
+                      <td>Twelve</td>
+                    </tr>
+                  </tbody>
+                </table>
+          </div>
+      </aside>
+      <section class="column is-three-fifths">
+          <div id="video-player" class="">
+              <!--video to be placed here-->
+          </div>
+      </section>
+  </main>
 
 </body>
 
