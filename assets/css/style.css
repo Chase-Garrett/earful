@@ -18,3 +18,14 @@ body {
 .headhero {
     background-image:linear-gradient(blue, white);
 }
+
+  tr, th, td {
+  padding-top: 10px;
+  padding-bottom: 0px;
+  padding-left: 30px;
+  padding-right: 40px;
+  }
+
+  thead{
+    border-bottom: 1px solid black;
+  }
