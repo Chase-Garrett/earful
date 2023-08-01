@@ -18,7 +18,7 @@ $(function () {
     }
 
     // add click event to playlist items
-    $("#playlist li").click(function() {
+    $(".songInfo td").click(function() {
         // get text of clicked playlist item
         var searchText = $(this).text();
         // create youtube api data object
@@ -40,7 +40,6 @@ $(function () {
             embedVideo(data);
         },
         error: function(response) {
-            console.log("Request Failed");
         }});
     });
 });
