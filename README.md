@@ -13,5 +13,12 @@ In order to utilize Earful, a user needs to click on one of the genre button or 
 ![Bulma icon](https://img.shields.io/badge/Bulma-00D1B2?style=for-the-badge&logo=Bulma&logoColor=white)
 ![Youtube icon](https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)
 
+This application utilizes the Bulma CSS framework: https://bulma.io/
+
+In order to generate playlists the Genius API is utilized: https://docs.genius.com/
+
+It also makes use of the YouTube API to find and embed videos: https://developers.google.com/youtube/v3
+
+
 ## LICENSE
 Please refer to the LICENSE in the repo.
