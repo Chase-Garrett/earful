@@ -49,7 +49,7 @@ $(function () {
   // Fetches 30 pop songs from the Genius API, calls the randomizeSongs() function,
   // and passes the array of randomized songs to the playlistArray
   function getPopSongs() {
-    var url = 'https://genius-song-lyrics1.p.rapidapi.com/chart/songs/?time_period=all_time&chart_genre=pop&per_page=30&page=1';
+    var url = 'https://genius-song-lyrics1.p.rapidapi.com/chart/songs/?time_period=all_time&chart_genre=pop&per_page=20&page=1';
     var options = {
       method: 'GET',
       headers: {
@@ -64,13 +64,14 @@ $(function () {
       })
       .then(function (data) {
         playlistArray = randomizeSongs(data);
+        displayPlaylist(playlistArray);
       });
   }
 
   // Fetches 30 rock songs from the Genius API, calls the randomizeSongs() function,
   // and passes the array of randomized songs to the playlistArray
   function getRockSongs() {
-    var url = 'https://genius-song-lyrics1.p.rapidapi.com/chart/songs/?time_period=all_time&chart_genre=rock&per_page=30&page=1';
+    var url = 'https://genius-song-lyrics1.p.rapidapi.com/chart/songs/?time_period=all_time&chart_genre=rock&per_page=20&page=1';
     var options = {
       method: 'GET',
       headers: {
@@ -85,13 +86,14 @@ $(function () {
       })
       .then(function (data) {
         playlistArray = randomizeSongs(data);
+        displayPlaylist(playlistArray);
       });
   }
   
   // Fetches 30 R&B songs from the Genius API, calls the randomizeSongs() function,
   // and passes the array of randomized songs to the playlistArray
   function getRBSongs() {
-    var url = 'https://genius-song-lyrics1.p.rapidapi.com/chart/songs/?time_period=all_time&chart_genre=rb&per_page=30&page=1';
+    var url = 'https://genius-song-lyrics1.p.rapidapi.com/chart/songs/?time_period=all_time&chart_genre=rb&per_page=20&page=1';
     var options = {
       method: 'GET',
       headers: {
@@ -106,13 +108,14 @@ $(function () {
       })
       .then(function (data) {
         playlistArray = randomizeSongs(data);
+        displayPlaylist(playlistArray);
       });
   }
   
   // Fetches 30 rap songs from the Genius API, calls the randomizeSongs() function,
   // and passes the array of randomized songs to the playlistArray
   function getRapSongs() {
-    var url = 'https://genius-song-lyrics1.p.rapidapi.com/chart/songs/?time_period=all_time&chart_genre=rap&per_page=30&page=1';
+    var url = 'https://genius-song-lyrics1.p.rapidapi.com/chart/songs/?time_period=all_time&chart_genre=rap&per_page=20&page=1';
     var options = {
       method: 'GET',
       headers: {
@@ -127,13 +130,14 @@ $(function () {
       })
       .then(function (data) {
         playlistArray = randomizeSongs(data);
+        displayPlaylist(playlistArray);
       });
   }
   
   // Fetches 30 country songs from the Genius API, calls the randomizeSongs() function,
   // and passes the array of randomized songs to the playlistArray
   function getCountrySongs() {
-    var url = 'https://genius-song-lyrics1.p.rapidapi.com/chart/songs/?time_period=all_time&chart_genre=country&per_page=30&page=1';
+    var url = 'https://genius-song-lyrics1.p.rapidapi.com/chart/songs/?time_period=all_time&chart_genre=country&per_page=20&page=1';
     var options = {
       method: 'GET',
       headers: {
@@ -148,13 +152,14 @@ $(function () {
       })
       .then(function (data) {
         playlistArray = randomizeSongs(data);
+        displayPlaylist(playlistArray);
       });
   }
 
   // Fetches 30 songs from the Genius API, calls the randomizeSongs() function,
   // and passes the array of randomized songs to the playlistArray
   function getAllSongs() {
-    var url = 'https://genius-song-lyrics1.p.rapidapi.com/chart/songs/?time_period=all_time&chart_genre=all&per_page=30&page=1';
+    var url = 'https://genius-song-lyrics1.p.rapidapi.com/chart/songs/?time_period=all_time&chart_genre=all&per_page=20&page=1';
     var options = {
       method: 'GET',
       headers: {
@@ -169,6 +174,7 @@ $(function () {
       })
       .then(function (data) {
         playlistArray = randomizeSongs(data);
+        displayPlaylist(playlistArray);
       });
   }
   
@@ -225,6 +231,15 @@ $(function () {
           searchResultsContainer.appendChild(button);
         }
       });
+  }
+
+  // Displays the contents of the playlistArray under the Title/Artist section
+  function displayPlaylist() {
+    var songInfoElements = $(".songInfo td");
+
+    for (var i = 0; i < playlistArray.length; i++) {
+      $(songInfoElements[i]).text(playlistArray[i]);
+    }
   }
   
   var popSearchButton = document.getElementById('pop-btn');
