@@ -11,7 +11,7 @@ const beforeUnloadListener = (event) => {
     event.preventDefault();
     return (event.returnValue = "");
 };
-
+// from here up i thought we could use this as a local storage 
 playBtn.addEventListener("click", () => {
     if (audioCtx.state === "suspended") {
         audioCtx.resume();
@@ -51,7 +51,7 @@ audioElement.addEventListener("ended", () => {
     playBtn.setAttribute("class", "paused");
     playBtn.textContent = "Play";
 });
-
+// from here up to 16 i thought we could use for the play buttons 
 let now_playing = document.querySelector(".now-playing");
 let track_art = document.querySelector(".track-art");
 let track_name = document.querySelector(".track-name");
@@ -109,7 +109,7 @@ function loadTrack(track_index) {
     curr_track.addEventListener("ended", nextTrack);
     random_bg_color();
 }
-
+// from here up to 54 use for artist song name and song length 
 function random_bg_color() {
     let red = Math.floor(Math.random() * 256) + 64;
     let green = Math.floor(Math.random() * 256) + 64;
