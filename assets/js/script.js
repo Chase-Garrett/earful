@@ -224,8 +224,28 @@ $(function () {
           button.textContent = hits[i].result.full_title;
   
           button.addEventListener('click', function (event) {
-            // Handle button click event here (like passing text content to Youtube API)
-            console.log(event.target.textContent);
+            // get text of clicked playlist item
+            var searchText = $(this).text();
+            // create youtube api data object
+            var youtubeApiData = {
+                key: youtubeApiKey,
+                q: searchText,
+                part: "snippet",
+                maxResults: 1,
+                type: "video",
+                videoEmbeddable: "true",
+            };
+            // make ajax call to youtube api
+            $.ajax({
+                type: "GET",
+                url: youtubeApiUrl,
+                data: youtubeApiData,
+                dataType: "json",
+            success: function(data) {
+                embedVideo(data);
+            },
+            error: function(response) {
+            }});
           });
   
           searchResultsContainer.appendChild(button);
@@ -262,4 +282,13 @@ $(function () {
 
   var submitSearchButton = document.getElementById('search-btn');
   submitSearchButton.addEventListener('click', songSearch);
+
+ // add keydown event listener to song-search input
+ var inputElement = document.getElementById('song-search');
+ inputElement.addEventListener('keydown', function (event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        songSearch();
+    }
+ });
 });
