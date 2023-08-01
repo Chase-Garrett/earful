@@ -245,6 +245,6 @@ $(function () {
   var allSearchButton = document.getElementById('all-btn');
   allSearchButton.addEventListener('click', getAllSongs);
 
-  var submitSearchButton = document.getElementById('submit');
+  var submitSearchButton = document.getElementById('search-btn');
   submitSearchButton.addEventListener('click', songSearch);
 });
