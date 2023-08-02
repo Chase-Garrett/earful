@@ -63,3 +63,10 @@ body {
   thead{
     border-bottom: 1px solid black;
   }
+
+  .songInfo:hover {
+    color: blue;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: larger;
+  }
