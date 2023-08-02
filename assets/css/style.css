@@ -53,20 +53,53 @@ body {
     background-image:linear-gradient(blue, white);
 }
 
-  tr, th, td {
-  padding-top: 10px;
-  padding-bottom: 0px;
-  padding-left: 30px;
-  padding-right: 40px;
-  }
+#search-results {
+    padding-bottom: 20px;
+}
 
-  thead{
+tr, th, td {
+    padding-top: 10px;
+    padding-bottom: 0px;
+    padding-left: 30px;
+    padding-right: 40px;
+}
+
+th {
+    font-size: 1.3rem;
+    background-color: #b7b6f1;
+}
+
+thead {
     border-bottom: 1px solid black;
-  }
+}
 
-  .songInfo:hover {
+.songInfo:hover {
     color: blue;
     cursor: pointer;
     font-weight: bold;
     font-size: larger;
-  }
+}
+
+#video {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 10px;
+    margin-right: 5%;
+    margin-left: 5%;
+    height: 0;
+}
+
+#video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+@media screen and (max-width: 700px) {
+    #search-results button {
+        display: inline-block;
+        font-size: 2.2vw; 
+    }
+}
