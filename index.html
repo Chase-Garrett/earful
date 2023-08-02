@@ -5,13 +5,142 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="Description" content="Weather dashboard page" />
+    <meta name="Description" content="Music Player" />
     <title>Earful</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script src="https://kit.fontawesome.com/7ba86bbea7.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.css" />
 </head>
 
-<body>
-    
-</body>
 
+<body>
+
+    <section class="hero is flex">
+        <div class="hero-body has-text-centered has has-background-info headhero">
+            <h1 class="title">
+                Earful
+            </h1>
+            <p class="subtitle">
+                Music Player
+            </p>
+        </div>
+    </section>
+
+    <div class="columns is-justify-content-space-evenly has-text-centered columnSection" id="columns">
+        <div class="column is-2 is-multiline is-one-third">
+            <button id="country-btn" class="button has-padding-horizontal-2 is-rounded is-size-4 longbutton">Country</button>
+            <button id="rock-btn" class="button is-rounded is-size-4 longbutton">Rock</button>
+        </div>
+        <div class="column is-2 is-multiline is-one-third">
+            <button id="pop-btn" class="button is-rounded is-size-4 longbutton">Pop</button>
+            <button id="all-btn" class="button is-rounded is-size-4 longbutton">All</button>
+        </div>
+        <div class="column is-2 is-multiline is-one-third">
+            <button id="rap-btn" class="button is-rounded is-size-4 longbutton">Rap</button>
+            <button id="r&b-btn" class="button is-rounded is-size-4 longbutton">R&B</button>
+        </div>
+    </div>
+
+    <div class="column mt-4 is-8 is-offset-2 field has-addons">
+        <input id="song-search" class="input searchbar has-text-centered" type="text" placeholder="Search artist or song here">
+        <div class="control has-icons-center">
+            <button id="search-btn" class="button is-rounded"><i class="fa-solid fa-magnifying-glass fa-lg" style="color: #000000;"></i></button>
+        </div>
+    </div>
+
+    <!--div that displays the search results-->
+    <div id="search-results"></div>
+    
+    <main class="columns">
+        <aside class="column is-one-half">
+            <div id="playlist">
+                <table>
+                    <thead>
+                      <tr>
+                        <th>Title/Artist</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="songInfo">
+                        <td></td>
+                      </tr>
+                      <tr class="songInfo">
+                        <td></td>
+                      </tr>
+                      <tr class="songInfo">
+                        <td></td>
+                      </tr>
+                      <tr class="songInfo">
+                        <td></td>
+                      </tr>
+                      <tr class="songInfo">
+                        <td></td>
+                      </tr>
+                      <tr class="songInfo">
+                        <td></td>
+                      </tr>
+                      <tr class="songInfo">
+                        <td></td>
+                      </tr>
+                      <tr class="songInfo">
+                        <td></td>
+                      </tr>
+                      <tr class="songInfo">
+                        <td></td>
+                      </tr>
+                      <tr class="songInfo">
+                        <td></td>
+                      </tr>
+                      <tr class="songInfo">
+                        <td></td>
+                      </tr>
+                      <tr class="songInfo">
+                        <td></td>
+                      </tr>
+                      <tr class="songInfo">
+                        <td></td>
+                      </tr>
+                      <tr class="songInfo">
+                        <td></td>
+                      </tr>
+                      <tr class="songInfo">
+                        <td></td>
+                      </tr>
+                      <tr class="songInfo">
+                        <td></td>
+                      </tr>
+                      <tr class="songInfo">
+                        <td></td>
+                      </tr>
+                      <tr class="songInfo">
+                        <td></td>
+                      </tr>
+                      <tr class="songInfo">
+                        <td></td>
+                      </tr>
+                      <tr class="songInfo">
+                        <td></td>
+                      </tr>                      
+                    </tbody>
+                  </table>
+            </div>
+        </aside>
+        <section class="column is-one-half">
+            <div id="video">
+              <iframe src="" width="700" height="420"></iframe>
+            </div>
+        </section>
+    </main>
+
+</body>
+<!-- Load jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Load the IFrame Player API code asynchronously. -->
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="https://www.youtube.com/player_api"></script>
+<!-- Load Custom Script -->
+<script src="assets/js/script.js"></script>
 </html>

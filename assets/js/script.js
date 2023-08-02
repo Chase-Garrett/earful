@@ -1,5 +1,7 @@
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code doesn't run until the DOM is finished loading
+$(function () {
+
 localStorage.setItem('value1', 123);
 localStorage.setItem('value2', 'abc');
 localStorage.setItem('state', JSON.stringify({ a: 1, b: 2, c: 3 }));
@@ -11,7 +13,7 @@ const beforeUnloadListener = (event) => {
     event.preventDefault();
     return (event.returnValue = "");
 };
-// from here up i thought we could use this as a local storage 
+
 playBtn.addEventListener("click", () => {
     if (audioCtx.state === "suspended") {
         audioCtx.resume();
@@ -29,182 +31,316 @@ playBtn.addEventListener("click", () => {
 });
 
 window.addEventListener('storage', s => {
-
-    console.log(`item changed: ${s.key}`);
-    console.log(`from value  : ${s.oldValue}`);
-    console.log(`to new value: ${s.newValue}`);
+  console.log(`item changed: ${s.key}`);
+  console.log(`from value  : ${s.oldValue}`);
+  console.log(`to new value: ${s.newValue}`);
 });
 
 nameInput.addEventListener("input", (event) => {
-    if (event.target.value !== "") {
-        addEventListener("beforeunload", beforeUnloadListener, {
-            capture: true
-        });
-    } else {
-        removeEventListener("beforeunload", beforeUnloadListener, {
-            capture: true,
-        });
-    }
+  if (event.target.value !== "") {
+      addEventListener("beforeunload", beforeUnloadListener, {
+          capture: true
+      });
+  } else {
+      removeEventListener("beforeunload", beforeUnloadListener, {
+          capture: true,
+      });
+  }
 });
 
 audioElement.addEventListener("ended", () => {
-    playBtn.setAttribute("class", "paused");
-    playBtn.textContent = "Play";
+  playBtn.setAttribute("class", "paused");
+  playBtn.textContent = "Play";
 });
-// from here up to 16 i thought we could use for the play buttons 
-let now_playing = document.querySelector(".now-playing");
-let track_art = document.querySelector(".track-art");
-let track_name = document.querySelector(".track-name");
-let track_artist = document.querySelector(".track-artist");
+    // create youtube api url
+  
+    var youtubeApiUrl = "https://www.googleapis.com/youtube/v3/search";
 
-let playpause_btn = document.querySelector(".playpause-track");
-let next_btn = document.querySelector(".next-track");
-let prev_btn = document.querySelector(".prev-track");
+    // create youtube api key
+    var youtubeApiKey = "AIzaSyCPMSYfJmdJ5lPXKyA8YkBfc7O8tu8i9ks";
 
-let seek_slider = document.querySelector(".seek_slider");
-let volume_slider = document.querySelector(".volume_slider");
-let curr_time = document.querySelector(".current-time");
-let total_duration = document.querySelector(".total-duration");
-
-let track_index = 0;
-let isPlaying = false;
-let updateTimer;
-
-let curr_track = document.createElement('audio');
-
-let track_list = [
-    {
-        name: "",
-        artist: "",
-        image: "",
-        path: ""
-    },
-    {
-        name: "",
-        artist: "",
-        image: "",
-        path: ""
-    },
-    {
-        name: "",
-        artist: "",
-        image: "",
-        path: "",
-    },
-];
-
-function loadTrack(track_index) {
-
-    clearInterval(updateTimer);
-    resetValues();
-    curr_track.src = track_list[track_index].path;
-    curr_track.load();
-    track_art.style.backgroundImage =
-        "url(" + track_list[track_index].image + ")";
-    track_name.textContent = track_list[track_index].name;
-    track_artist.textContent = track_list[track_index].artist;
-    now_playing.textContent =
-        "PLAYING " + (track_index + 1) + " OF " + track_list.length;
-    updateTimer = setInterval(seekUpdate, 1000);
-    curr_track.addEventListener("ended", nextTrack);
-    random_bg_color();
-}
-// from here up to 54 use for artist song name and song length 
-function random_bg_color() {
-    let red = Math.floor(Math.random() * 256) + 64;
-    let green = Math.floor(Math.random() * 256) + 64;
-    let blue = Math.floor(Math.random() * 256) + 64;
-    let bgColor = "rgb(" + red + ", " + green + ", " + blue + ")";
-    document.body.style.background = bgColor;
-}
-
-function resetValues() {
-    curr_time.textContent = "00:00";
-    total_duration.textContent = "00:00";
-    seek_slider.value = 0;
-}
-
-function playpauseTrack() {
-
-    if (!isPlaying) playTrack();
-    else pauseTrack();
-}
-
-function playTrack() {
-
-    curr_track.play();
-    isPlaying = true;
-    playpause_btn.innerHTML = '<i class="fa fa-pause-circle fa-5x"></i>';
-}
-
-function pauseTrack() {
-
-    curr_track.pause();
-    isPlaying = false;
-    playpause_btn.innerHTML = '<i class="fa fa-play-circle fa-5x"></i>';
-}
-
-function nextTrack() {
-
-    if (track_index < track_list.length - 1)
-        track_index += 1;
-    else track_index = 0;
-
-
-    loadTrack(track_index);
-    playTrack();
-}
-
-function prevTrack() {
-
-    if (track_index > 0)
-        track_index -= 1;
-    else track_index = track_list.length - 1;
-
-
-    loadTrack(track_index);
-    playTrack();
-}
-
-function seekTo() {
-
-    seekto = curr_track.duration * (seek_slider.value / 100);
-    curr_track.currentTime = seekto;
-}
-
-function setVolume() {
-
-    curr_track.volume = volume_slider.value / 100;
-}
-
-function seekUpdate() {
-    let seekPosition = 0;
-
-
-    if (!isNaN(curr_track.duration)) {
-        seekPosition = curr_track.currentTime * (100 / curr_track.duration);
-        seek_slider.value = seekPosition;
-
-
-        let currentMinutes = Math.floor(curr_track.currentTime / 60);
-        let currentSeconds = Math.floor(curr_track.currentTime - currentMinutes * 60);
-        let durationMinutes = Math.floor(curr_track.duration / 60);
-        let durationSeconds = Math.floor(curr_track.duration - durationMinutes * 60);
-
-
-        if (currentSeconds < 10) { currentSeconds = "0" + currentSeconds; }
-        if (durationSeconds < 10) { durationSeconds = "0" + durationSeconds; }
-        if (currentMinutes < 10) { currentMinutes = "0" + currentMinutes; }
-        if (durationMinutes < 10) { durationMinutes = "0" + durationMinutes; }
-
-
-        curr_time.textContent = currentMinutes + ":" + currentSeconds;
-        total_duration.textContent = durationMinutes + ":" + durationSeconds;
+    // create function to embed video
+    function embedVideo(data) {
+        // get video id from data object
+        var videoId = data.items[0].id.videoId;
+        // create video url
+        var videoUrl = "https://www.youtube.com/embed/" + videoId;
+        // edit iframe src attribute to embed video
+        $("iframe").attr("src", videoUrl);
     }
-}
 
+    // add click event to playlist items
+    $(".songInfo td").click(function() {
+        // get text of clicked playlist item
+        var searchText = $(this).text();
+        // create youtube api data object
+        var youtubeApiData = {
+            key: youtubeApiKey,
+            q: searchText,
+            part: "snippet",
+            maxResults: 1,
+            type: "video",
+            videoEmbeddable: "true",
+        };
+        // make ajax call to youtube api
+        $.ajax({
+            type: "GET",
+            url: youtubeApiUrl,
+            data: youtubeApiData,
+            dataType: "json",
+        success: function(data) {
+            embedVideo(data);
+        },
+        error: function(response) {
+        }});
+    });
+  
+  var playlistArray = [];
+  var inputElement = document.getElementById('song-search');
 
+  // Fetches 30 pop songs from the Genius API, calls the randomizeSongs() function,
+  // and passes the array of randomized songs to the playlistArray
+  function getPopSongs() {
+    var url = 'https://genius-song-lyrics1.p.rapidapi.com/chart/songs/?time_period=all_time&chart_genre=pop&per_page=20&page=1';
+    var options = {
+      method: 'GET',
+      headers: {
+        'X-RapidAPI-Key': 'f138f6c663msh194c2fff86b5d0ap1620a3jsn010afa532419',
+        'X-RapidAPI-Host': 'genius-song-lyrics1.p.rapidapi.com'
+      }
+    };
+  
+    fetch(url, options)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        playlistArray = randomizeSongs(data);
+        displayPlaylist(playlistArray);
+      });
+  }
 
+  // Fetches 30 rock songs from the Genius API, calls the randomizeSongs() function,
+  // and passes the array of randomized songs to the playlistArray
+  function getRockSongs() {
+    var url = 'https://genius-song-lyrics1.p.rapidapi.com/chart/songs/?time_period=all_time&chart_genre=rock&per_page=20&page=1';
+    var options = {
+      method: 'GET',
+      headers: {
+        'X-RapidAPI-Key': 'f138f6c663msh194c2fff86b5d0ap1620a3jsn010afa532419',
+        'X-RapidAPI-Host': 'genius-song-lyrics1.p.rapidapi.com'
+      }
+    };
+  
+    fetch(url, options)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        playlistArray = randomizeSongs(data);
+        displayPlaylist(playlistArray);
+      });
+  }
+  
+  // Fetches 30 R&B songs from the Genius API, calls the randomizeSongs() function,
+  // and passes the array of randomized songs to the playlistArray
+  function getRBSongs() {
+    var url = 'https://genius-song-lyrics1.p.rapidapi.com/chart/songs/?time_period=all_time&chart_genre=rb&per_page=20&page=1';
+    var options = {
+      method: 'GET',
+      headers: {
+        'X-RapidAPI-Key': 'f138f6c663msh194c2fff86b5d0ap1620a3jsn010afa532419',
+        'X-RapidAPI-Host': 'genius-song-lyrics1.p.rapidapi.com'
+      }
+    };
+  
+    fetch(url, options)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        playlistArray = randomizeSongs(data);
+        displayPlaylist(playlistArray);
+      });
+  }
+  
+  // Fetches 30 rap songs from the Genius API, calls the randomizeSongs() function,
+  // and passes the array of randomized songs to the playlistArray
+  function getRapSongs() {
+    var url = 'https://genius-song-lyrics1.p.rapidapi.com/chart/songs/?time_period=all_time&chart_genre=rap&per_page=20&page=1';
+    var options = {
+      method: 'GET',
+      headers: {
+        'X-RapidAPI-Key': 'f138f6c663msh194c2fff86b5d0ap1620a3jsn010afa532419',
+        'X-RapidAPI-Host': 'genius-song-lyrics1.p.rapidapi.com'
+      }
+    };
+  
+    fetch(url, options)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        playlistArray = randomizeSongs(data);
+        displayPlaylist(playlistArray);
+      });
+  }
+  
+  // Fetches 30 country songs from the Genius API, calls the randomizeSongs() function,
+  // and passes the array of randomized songs to the playlistArray
+  function getCountrySongs() {
+    var url = 'https://genius-song-lyrics1.p.rapidapi.com/chart/songs/?time_period=all_time&chart_genre=country&per_page=20&page=1';
+    var options = {
+      method: 'GET',
+      headers: {
+        'X-RapidAPI-Key': 'f138f6c663msh194c2fff86b5d0ap1620a3jsn010afa532419',
+        'X-RapidAPI-Host': 'genius-song-lyrics1.p.rapidapi.com'
+      }
+    };
+  
+    fetch(url, options)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        playlistArray = randomizeSongs(data);
+        displayPlaylist(playlistArray);
+      });
+  }
 
+  // Fetches 30 songs from the Genius API, calls the randomizeSongs() function,
+  // and passes the array of randomized songs to the playlistArray
+  function getAllSongs() {
+    var url = 'https://genius-song-lyrics1.p.rapidapi.com/chart/songs/?time_period=all_time&chart_genre=all&per_page=20&page=1';
+    var options = {
+      method: 'GET',
+      headers: {
+        'X-RapidAPI-Key': 'f138f6c663msh194c2fff86b5d0ap1620a3jsn010afa532419',
+        'X-RapidAPI-Host': 'genius-song-lyrics1.p.rapidapi.com'
+      }
+    };
+  
+    fetch(url, options)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        playlistArray = randomizeSongs(data);
+        displayPlaylist(playlistArray);
+      });
+  }
+  
+  // Randomizes the songs, stores the full title of each song into the randomizedArray, and returns that array
+  function randomizeSongs(data) {
+    var songs = data.chart_items;
+    randomizedArray = [];
+  
+    for (var i = songs.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      [songs[i], songs[j]] = [songs[j], songs[i]];
+    }
+  
+    for (var i = 0; i < songs.length; i++) {
+      var fullTitle = songs[i].item.full_title;
+      randomizedArray.push(fullTitle);
+    }
+  
+    return randomizedArray;
+  }
 
+  function songSearch() {
+    var searchValue = inputElement.value;
+    var url = `https://genius-song-lyrics1.p.rapidapi.com/search/?q=${searchValue}&per_page=10&page=1`;
+    var options = {
+      method: 'GET',
+      headers: {
+        'X-RapidAPI-Key': 'f138f6c663msh194c2fff86b5d0ap1620a3jsn010afa532419',
+        'X-RapidAPI-Host': 'genius-song-lyrics1.p.rapidapi.com'
+      }
+    };
+  
+    fetch(url, options)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        // Clear previous search results
+        var searchResultsContainer = document.getElementById('search-results');
+        searchResultsContainer.innerHTML = '';
+  
+        // Create buttons for each search result (total of 10)
+        var hits = data.hits;
+        for (var i = 0; i < hits.length; i++) {
+          var button = document.createElement('button');
+          button.className = 'button is-link m-2'; // Change classes based on desired Bulma CSS
+          button.textContent = hits[i].result.full_title;
+  
+          button.addEventListener('click', function (event) {
+            // get text of clicked playlist item
+            var searchText = $(this).text();
+            // create youtube api data object
+            var youtubeApiData = {
+                key: youtubeApiKey,
+                q: searchText,
+                part: "snippet",
+                maxResults: 1,
+                type: "video",
+                videoEmbeddable: "true",
+            };
+            // make ajax call to youtube api
+            $.ajax({
+                type: "GET",
+                url: youtubeApiUrl,
+                data: youtubeApiData,
+                dataType: "json",
+            success: function(data) {
+                embedVideo(data);
+            },
+            error: function(response) {
+            }});
+          });
+  
+          searchResultsContainer.appendChild(button);
+        }
+      });
+  }
 
+  // Displays the contents of the playlistArray under the Title/Artist section
+  function displayPlaylist() {
+    var songInfoElements = $(".songInfo td");
+
+    for (var i = 0; i < playlistArray.length; i++) {
+      $(songInfoElements[i]).text(playlistArray[i]);
+    }
+  }
+  
+  var popSearchButton = document.getElementById('pop-btn');
+  popSearchButton.addEventListener('click', getPopSongs);
+  
+  var rockSearchButton = document.getElementById('rock-btn');
+  rockSearchButton.addEventListener('click', getRockSongs);
+  
+  var rbSearchButton = document.getElementById('r&b-btn');
+  rbSearchButton.addEventListener('click', getRBSongs);
+  
+  var rapSearchButton = document.getElementById('rap-btn');
+  rapSearchButton.addEventListener('click', getRapSongs);
+  
+  var countrySearchButton = document.getElementById('country-btn');
+  countrySearchButton.addEventListener('click', getCountrySongs);
+
+  var allSearchButton = document.getElementById('all-btn');
+  allSearchButton.addEventListener('click', getAllSongs);
+
+  var submitSearchButton = document.getElementById('search-btn');
+  submitSearchButton.addEventListener('click', songSearch);
+
+ // add keydown event listener to song-search input
+ var inputElement = document.getElementById('song-search');
+ inputElement.addEventListener('keydown', function (event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        songSearch();
+    }
+ });
+});
