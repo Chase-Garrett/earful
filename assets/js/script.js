@@ -1,100 +1,56 @@
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code doesn't run until the DOM is finished loading
 $(function () {
+  // create youtube api url
 
-localStorage.setItem('value1', 123);
-localStorage.setItem('value2', 'abc');
-localStorage.setItem('state', JSON.stringify({ a: 1, b: 2, c: 3 }));
-localStorage.removeItem('state')
+  var youtubeApiUrl = "https://www.googleapis.com/youtube/v3/search";
 
-const state = JSON.parse(localStorage.getItem('state'));
-const nameInput = document.querySelector("#name");
-const beforeUnloadListener = (event) => {
-    event.preventDefault();
-    return (event.returnValue = "");
-};
-
-playBtn.addEventListener("click", () => {
-    if (audioCtx.state === "suspended") {
-        audioCtx.resume();
-    }
-    if (playBtn.getAttribute("class") === "paused") {
-        audioElement.play();
-        playBtn.setAttribute("class", "playing");
-        playBtn.textContent = "Pause";
-    }
-    else if (playBtn.getAttribute("class") === "playing") {
-        audioElement.pause();
-        playBtn.setAttribute("class", "paused");
-        playBtn.textContent = "Play";
-    }
-});
-
-window.addEventListener('storage', s => {
-  console.log(`item changed: ${s.key}`);
-  console.log(`from value  : ${s.oldValue}`);
-  console.log(`to new value: ${s.newValue}`);
-});
-
-nameInput.addEventListener("input", (event) => {
-  if (event.target.value !== "") {
-      addEventListener("beforeunload", beforeUnloadListener, {
-          capture: true
-      });
-  } else {
-      removeEventListener("beforeunload", beforeUnloadListener, {
-          capture: true,
-      });
+  // create youtube api key
+  var youtubeApiKey = "AIzaSyCPMSYfJmdJ5lPXKyA8YkBfc7O8tu8i9ks";
+  function savePlaylist(playlist) {
+    localStorage.setItem("currentPlaylist", JSON.stringify(playlist))
   }
-});
+  function getCurrentPlaylist (){
+    var currentPlaylist = JSON.parse(localStorage.getItem("currentPlaylist"))
+    displayPlaylist(currentPlaylist)
+  }
+  // create function to embed video
+  function embedVideo(data) {
+    // get video id from data object
+    var videoId = data.items[0].id.videoId;
+    // create video url
+    var videoUrl = "https://www.youtube.com/embed/" + videoId;
+    // edit iframe src attribute to embed video
+    $("iframe").attr("src", videoUrl);
+  }
 
-audioElement.addEventListener("ended", () => {
-  playBtn.setAttribute("class", "paused");
-  playBtn.textContent = "Play";
-});
-    // create youtube api url
-  
-    var youtubeApiUrl = "https://www.googleapis.com/youtube/v3/search";
-
-    // create youtube api key
-    var youtubeApiKey = "AIzaSyCPMSYfJmdJ5lPXKyA8YkBfc7O8tu8i9ks";
-
-    // create function to embed video
-    function embedVideo(data) {
-        // get video id from data object
-        var videoId = data.items[0].id.videoId;
-        // create video url
-        var videoUrl = "https://www.youtube.com/embed/" + videoId;
-        // edit iframe src attribute to embed video
-        $("iframe").attr("src", videoUrl);
-    }
-
-    // add click event to playlist items
-    $(".songInfo td").click(function() {
-        // get text of clicked playlist item
-        var searchText = $(this).text();
-        // create youtube api data object
-        var youtubeApiData = {
-            key: youtubeApiKey,
-            q: searchText,
-            part: "snippet",
-            maxResults: 1,
-            type: "video",
-            videoEmbeddable: "true",
-        };
-        // make ajax call to youtube api
-        $.ajax({
-            type: "GET",
-            url: youtubeApiUrl,
-            data: youtubeApiData,
-            dataType: "json",
-        success: function(data) {
-            embedVideo(data);
-        },
-        error: function(response) {
-        }});
+  // add click event to playlist items
+  $(".songInfo td").click(function () {
+    // get text of clicked playlist item
+    var searchText = $(this).text();
+    // create youtube api data object
+    var youtubeApiData = {
+      key: youtubeApiKey,
+      q: searchText,
+      part: "snippet",
+      maxResults: 1,
+      type: "video",
+      videoEmbeddable: "true",
+    };
+    // make ajax call to youtube api
+    $.ajax({
+      type: "GET",
+      url: youtubeApiUrl,
+      data: youtubeApiData,
+      dataType: "json",
+      success: function (data) {
+        embedVideo(data);
+      },
+      error: function (response) {
+      }
     });
-  
+  });
+
   var playlistArray = [];
   var inputElement = document.getElementById('song-search');
 
@@ -109,7 +65,7 @@ audioElement.addEventListener("ended", () => {
         'X-RapidAPI-Host': 'genius-song-lyrics1.p.rapidapi.com'
       }
     };
-  
+
     fetch(url, options)
       .then(function (response) {
         return response.json();
@@ -117,6 +73,7 @@ audioElement.addEventListener("ended", () => {
       .then(function (data) {
         playlistArray = randomizeSongs(data);
         displayPlaylist(playlistArray);
+        savePlaylist(playlistArray)
       });
   }
 
@@ -131,7 +88,7 @@ audioElement.addEventListener("ended", () => {
         'X-RapidAPI-Host': 'genius-song-lyrics1.p.rapidapi.com'
       }
     };
-  
+
     fetch(url, options)
       .then(function (response) {
         return response.json();
@@ -139,9 +96,10 @@ audioElement.addEventListener("ended", () => {
       .then(function (data) {
         playlistArray = randomizeSongs(data);
         displayPlaylist(playlistArray);
+        savePlaylist(playlistArray)
       });
   }
-  
+
   // Fetches 30 R&B songs from the Genius API, calls the randomizeSongs() function,
   // and passes the array of randomized songs to the playlistArray
   function getRBSongs() {
@@ -153,7 +111,7 @@ audioElement.addEventListener("ended", () => {
         'X-RapidAPI-Host': 'genius-song-lyrics1.p.rapidapi.com'
       }
     };
-  
+
     fetch(url, options)
       .then(function (response) {
         return response.json();
@@ -161,9 +119,10 @@ audioElement.addEventListener("ended", () => {
       .then(function (data) {
         playlistArray = randomizeSongs(data);
         displayPlaylist(playlistArray);
+        savePlaylist(playlistArray)
       });
   }
-  
+
   // Fetches 30 rap songs from the Genius API, calls the randomizeSongs() function,
   // and passes the array of randomized songs to the playlistArray
   function getRapSongs() {
@@ -175,7 +134,7 @@ audioElement.addEventListener("ended", () => {
         'X-RapidAPI-Host': 'genius-song-lyrics1.p.rapidapi.com'
       }
     };
-  
+
     fetch(url, options)
       .then(function (response) {
         return response.json();
@@ -183,9 +142,10 @@ audioElement.addEventListener("ended", () => {
       .then(function (data) {
         playlistArray = randomizeSongs(data);
         displayPlaylist(playlistArray);
+        savePlaylist(playlistArray)
       });
   }
-  
+
   // Fetches 30 country songs from the Genius API, calls the randomizeSongs() function,
   // and passes the array of randomized songs to the playlistArray
   function getCountrySongs() {
@@ -197,7 +157,7 @@ audioElement.addEventListener("ended", () => {
         'X-RapidAPI-Host': 'genius-song-lyrics1.p.rapidapi.com'
       }
     };
-  
+
     fetch(url, options)
       .then(function (response) {
         return response.json();
@@ -205,6 +165,7 @@ audioElement.addEventListener("ended", () => {
       .then(function (data) {
         playlistArray = randomizeSongs(data);
         displayPlaylist(playlistArray);
+        savePlaylist(playlistArray)
       });
   }
 
@@ -219,7 +180,7 @@ audioElement.addEventListener("ended", () => {
         'X-RapidAPI-Host': 'genius-song-lyrics1.p.rapidapi.com'
       }
     };
-  
+
     fetch(url, options)
       .then(function (response) {
         return response.json();
@@ -227,24 +188,25 @@ audioElement.addEventListener("ended", () => {
       .then(function (data) {
         playlistArray = randomizeSongs(data);
         displayPlaylist(playlistArray);
+        savePlaylist(playlistArray)
       });
   }
-  
+
   // Randomizes the songs, stores the full title of each song into the randomizedArray, and returns that array
   function randomizeSongs(data) {
     var songs = data.chart_items;
     randomizedArray = [];
-  
+
     for (var i = songs.length - 1; i > 0; i--) {
       var j = Math.floor(Math.random() * (i + 1));
       [songs[i], songs[j]] = [songs[j], songs[i]];
     }
-  
+
     for (var i = 0; i < songs.length; i++) {
       var fullTitle = songs[i].item.full_title;
       randomizedArray.push(fullTitle);
     }
-  
+
     return randomizedArray;
   }
 
@@ -258,7 +220,7 @@ audioElement.addEventListener("ended", () => {
         'X-RapidAPI-Host': 'genius-song-lyrics1.p.rapidapi.com'
       }
     };
-  
+
     fetch(url, options)
       .then(function (response) {
         return response.json();
@@ -267,65 +229,66 @@ audioElement.addEventListener("ended", () => {
         // Clear previous search results
         var searchResultsContainer = document.getElementById('search-results');
         searchResultsContainer.innerHTML = '';
-  
+
         // Create buttons for each search result (total of 10)
         var hits = data.hits;
         for (var i = 0; i < hits.length; i++) {
           var button = document.createElement('button');
           button.className = 'button is-link m-2'; // Change classes based on desired Bulma CSS
           button.textContent = hits[i].result.full_title;
-  
+
           button.addEventListener('click', function (event) {
             // get text of clicked playlist item
             var searchText = $(this).text();
             // create youtube api data object
             var youtubeApiData = {
-                key: youtubeApiKey,
-                q: searchText,
-                part: "snippet",
-                maxResults: 1,
-                type: "video",
-                videoEmbeddable: "true",
+              key: youtubeApiKey,
+              q: searchText,
+              part: "snippet",
+              maxResults: 1,
+              type: "video",
+              videoEmbeddable: "true",
             };
             // make ajax call to youtube api
             $.ajax({
-                type: "GET",
-                url: youtubeApiUrl,
-                data: youtubeApiData,
-                dataType: "json",
-            success: function(data) {
+              type: "GET",
+              url: youtubeApiUrl,
+              data: youtubeApiData,
+              dataType: "json",
+              success: function (data) {
                 embedVideo(data);
-            },
-            error: function(response) {
-            }});
+              },
+              error: function (response) {
+              }
+            });
           });
-  
+
           searchResultsContainer.appendChild(button);
         }
       });
   }
 
   // Displays the contents of the playlistArray under the Title/Artist section
-  function displayPlaylist() {
+  function displayPlaylist(playlistArray) {
     var songInfoElements = $(".songInfo td");
 
     for (var i = 0; i < playlistArray.length; i++) {
       $(songInfoElements[i]).text(playlistArray[i]);
     }
   }
-  
+
   var popSearchButton = document.getElementById('pop-btn');
   popSearchButton.addEventListener('click', getPopSongs);
-  
+
   var rockSearchButton = document.getElementById('rock-btn');
   rockSearchButton.addEventListener('click', getRockSongs);
-  
+
   var rbSearchButton = document.getElementById('r&b-btn');
   rbSearchButton.addEventListener('click', getRBSongs);
-  
+
   var rapSearchButton = document.getElementById('rap-btn');
   rapSearchButton.addEventListener('click', getRapSongs);
-  
+
   var countrySearchButton = document.getElementById('country-btn');
   countrySearchButton.addEventListener('click', getCountrySongs);
 
@@ -335,12 +298,13 @@ audioElement.addEventListener("ended", () => {
   var submitSearchButton = document.getElementById('search-btn');
   submitSearchButton.addEventListener('click', songSearch);
 
- // add keydown event listener to song-search input
- var inputElement = document.getElementById('song-search');
- inputElement.addEventListener('keydown', function (event) {
+  // add keydown event listener to song-search input
+  var inputElement = document.getElementById('song-search');
+  inputElement.addEventListener('keydown', function (event) {
     if (event.keyCode === 13) {
-        event.preventDefault();
-        songSearch();
+      event.preventDefault();
+      songSearch();
     }
- });
+  });
+  getCurrentPlaylist()
 });
