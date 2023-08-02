@@ -24,32 +24,37 @@ $(function () {
     $("iframe").attr("src", videoUrl);
   }
 
-  // add click event to playlist items
-  $(".songInfo td").click(function () {
-    // get text of clicked playlist item
-    var searchText = $(this).text();
-    // create youtube api data object
-    var youtubeApiData = {
-      key: youtubeApiKey,
-      q: searchText,
-      part: "snippet",
-      maxResults: 1,
-      type: "video",
-      videoEmbeddable: "true",
-    };
-    // make ajax call to youtube api
-    $.ajax({
-      type: "GET",
-      url: youtubeApiUrl,
-      data: youtubeApiData,
-      dataType: "json",
-      success: function (data) {
-        embedVideo(data);
-      },
-      error: function (response) {
-      }
+    // add click event to playlist items
+    $(".songInfo td").click(function() {
+        // get text of clicked playlist item
+        var searchText = $(this).text();
+
+        // Check if the playlist is empty before making the API call
+        if (searchText.trim() === "") {
+          return; // If the playlist is empty, do nothing and return
+        }
+        
+        // create youtube api data object
+        var youtubeApiData = {
+            key: youtubeApiKey,
+            q: searchText,
+            part: "snippet",
+            maxResults: 1,
+            type: "video",
+            videoEmbeddable: "true",
+        };
+        // make ajax call to youtube api
+        $.ajax({
+            type: "GET",
+            url: youtubeApiUrl,
+            data: youtubeApiData,
+            dataType: "json",
+        success: function(data) {
+            embedVideo(data);
+        },
+        error: function(response) {
+        }});
     });
-  });
 
   var playlistArray = [];
   var inputElement = document.getElementById('song-search');
@@ -306,5 +311,5 @@ $(function () {
       songSearch();
     }
   });
-  getCurrentPlaylist()
+  getCurrentPlaylist();
 });
