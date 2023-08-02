@@ -55,7 +55,6 @@ $(function () {
         error: function(response) {
         }});
     });
-  });
 
   var playlistArray = [];
   var inputElement = document.getElementById('song-search');
@@ -312,5 +311,5 @@ $(function () {
       songSearch();
     }
   });
-  getCurrentPlaylist()
+  getCurrentPlaylist();
 });
