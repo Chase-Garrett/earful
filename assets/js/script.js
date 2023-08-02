@@ -21,6 +21,12 @@ $(function () {
     $(".songInfo td").click(function() {
         // get text of clicked playlist item
         var searchText = $(this).text();
+
+        // Check if the playlist is empty before making the API call
+        if (searchText.trim() === "") {
+          return; // If the playlist is empty, do nothing and return
+        }
+        
         // create youtube api data object
         var youtubeApiData = {
             key: youtubeApiKey,
