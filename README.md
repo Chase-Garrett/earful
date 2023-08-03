@@ -28,5 +28,14 @@ Example of the custom search:
 In order to generate playlists the Genius API is utilized: https://docs.genius.com/
 
 
+
+### **Contributors**
+
+[![](https://github.com/Chase-Garrett.png?size=50)](https://github.com/Chase-Garrett)
+[![](https://github.com/jb6131.png?size=50)](https://github.com/jb6131)
+[![](https://github.com/kmstephens437.png?size=50)](https://github.com/kmstephens437)
+[![](https://github.com/srwesley.png?size=50)](https://github.com/srwesley)
+[![](https://github.com/FireofGremory.png?size=50)](https://github.com/FireofGremory)
+
 ## LICENSE
 Please refer to the LICENSE in the repo.
