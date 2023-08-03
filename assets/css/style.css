@@ -57,6 +57,10 @@ body {
     padding-bottom: 20px;
 }
 
+#playlist th {
+    column-width: 100vw;
+}
+
 tr, th, td {
     padding-top: 10px;
     padding-bottom: 0px;
