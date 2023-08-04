@@ -24,6 +24,7 @@ Example of the custom search:
 [![Youtube icon](https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://developers.google.com/youtube/v3
 )
 [![Font Awesome icon](https://img.shields.io/badge/Font_Awesome-339AF0?style=for-the-badge&logo=fontawesome&logoColor=white)](https://fontawesome.com/)
+[![jQuery icon](https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white)](https://jquery.com/)
 
 In order to generate playlists the Genius API is utilized: https://docs.genius.com/
 
